@@ -1,14 +1,13 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class ArrayListMaster {
+public class ArrayIntListMaster {
 
 
     public static void main(String[] args) {
         boolean completed = false;
-        ArrayList<String> valuesList = new ArrayList<String>();
+        ArrayIntList valuesList = new ArrayIntList();
         Scanner userSelector = new Scanner(System.in);
         String userSelection;
         // As long as you haven't noted to quit
@@ -25,19 +24,19 @@ public class ArrayListMaster {
             userSelector.nextLine();
             // If "A", call the add method
             if (userSelection.equals("A"))
-                addToArrayList(valuesList, userSelector);
+                addToArrayIntList(valuesList, userSelector);
 
             // If "I", call the insert method
             if (userSelection.equals("I"))
-                insertIntoArrayList(valuesList, userSelector);
+                insertIntoArrayIntList(valuesList, userSelector);
 
             // If"D", call the delete method
             if (userSelection.equals("D"))
-                deleteFromArrayList(valuesList, userSelector);
+                deleteFromArrayIntList(valuesList, userSelector);
 
             // If "P", call the print method
             if (userSelection.equals("P"))
-                printArrayList(valuesList);
+                printArrayIntList(valuesList);
             // If "Q"
             if (userSelection.equals("Q"))
                 completed = true;
@@ -46,18 +45,18 @@ public class ArrayListMaster {
         System.exit(0);
     }
 
-    public static void printArrayList(ArrayList<String> valuesList) {
+    public static void printArrayIntList(ArrayIntList valuesList) {
         System.out.println(valuesList);
     }
 
-    public static void addToArrayList(ArrayList<String> valuesList, Scanner userSelector) {
+    public static void addToArrayIntList(ArrayIntList valuesList, Scanner userSelector) {
         System.out.println("What value would you like to add?");
-        String newValue = userSelector.next();
+        int newValue = userSelector.nextInt();
         userSelector.nextLine();
         valuesList.add(newValue);
     }
 
-    public static void deleteFromArrayList(ArrayList<String> valuesList, Scanner userSelector) {
+    public static void deleteFromArrayIntList(ArrayIntList valuesList, Scanner userSelector) {
         System.out.println("Which index would you like to delete from?");
         int newSpot = userSelector.nextInt();
         userSelector.nextLine();
@@ -67,18 +66,45 @@ public class ArrayListMaster {
             System.out.println("Invalid index received; no change");
     }
 
-    public static void insertIntoArrayList(ArrayList<String> valuesList, Scanner userSelector) {
+    public static void insertIntoArrayIntList(ArrayIntList valuesList, Scanner userSelector) {
         System.out.println("At which index would you like to insert a value?");
         int newSpot = userSelector.nextInt();
         userSelector.nextLine();
         if ((newSpot >= 0) && (newSpot <= valuesList.size()))
         {
             System.out.println("What value would you like to add?");
-            String newValue = userSelector.next();
+            int newValue = userSelector.nextInt();
             userSelector.nextLine();
-            valuesList.add(newSpot, newValue);
+            valuesList.add(newValue);
         }
         else
-        System.out.println("Invalid index received; no change");
+            System.out.println("Invalid index received; no change");
+    }
+}
+
+class ArrayIntList {
+    int[] contents;
+    int size = 0;
+
+    public ArrayIntList() {
+        contents = new int[10]; // Initial capacity
+    }
+
+    public void add(int newValue) {
+        contents[size] = newValue;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+        for (int i = index; i < size - 1; i++) {
+            contents[i] = contents[i + 1];
+        }
+        size--;
     }
 }
